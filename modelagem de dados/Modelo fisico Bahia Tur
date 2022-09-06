@@ -1,0 +1,52 @@
+/* logico: */
+
+CREATE TABLE Usuario (
+    Id_usuario VARCHAR PRIMARY KEY,
+    Nome_usuario VARCHAR,
+    Endereco VARCHAR,
+    Telefone_usuario VARCHAR,
+    Cpf VARCHAR,
+    fk_Passagens_Id_passagem INTEGER
+);
+
+CREATE TABLE Hotel_Pacotes (
+    Id_Hotel INTEGER,
+    Endereco VARCHAR,
+    Telefone VARCHAR,
+    CNPJ VARCHAR,
+    Servisos VARCHAR,
+    Precos DECIMAL,
+    Pacotes_id INTEGER,
+    PRIMARY KEY (Id_Hotel, Pacotes_id)
+);
+
+CREATE TABLE Passagens (
+    Id_passagem INTEGER PRIMARY KEY,
+    Preco DECIMAL,
+    Destinos VARCHAR,
+    Origem REAL,
+    Destino REAL,
+    nome_passageiro varchar,
+    Telefone_passageiro varchar
+);
+
+CREATE TABLE reserva (
+    fk_Hotel_Pacotes_Id_Hotel INTEGER,
+    fk_Hotel_Pacotes_Pacotes_id INTEGER,
+    fk_Usuario_Id_usuario VARCHAR
+);
+ 
+ALTER TABLE Usuario ADD CONSTRAINT FK_Usuario_2
+    FOREIGN KEY (fk_Passagens_Id_passagem)
+    REFERENCES Passagens (Id_passagem)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE reserva ADD CONSTRAINT FK_reserva_1
+    FOREIGN KEY (fk_Hotel_Pacotes_Id_Hotel, fk_Hotel_Pacotes_Pacotes_id)
+    REFERENCES Hotel_Pacotes (Id_Hotel, Pacotes_id)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE reserva ADD CONSTRAINT FK_reserva_2
+    FOREIGN KEY (fk_Usuario_Id_usuario)
+    REFERENCES Usuario (Id_usuario)
+    ON DELETE RESTRICT;

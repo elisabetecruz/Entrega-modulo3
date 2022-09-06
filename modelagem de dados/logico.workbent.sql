@@ -1,0 +1,1 @@
+SELECT * FROM bahia_tur.hotel_pacotes;
